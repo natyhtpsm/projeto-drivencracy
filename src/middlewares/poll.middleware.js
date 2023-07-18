@@ -1,6 +1,6 @@
 import { pollSchema } from "../schemas/poll.schema.js";
 
-export default function PostPollMiddleware(req, res, next) {
+export default function pollMiddleware(req, res, next) {
     const { title, expireAt } = req.body;
     const poll = { title, expireAt };
     const validationPoll = pollSchema.validate(poll);

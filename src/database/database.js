@@ -3,6 +3,8 @@ import { MongoClient } from 'mongodb';
 
 dotenv.config();
 const mongoClient = new MongoClient(process.env.DATABASE_URL);
+export const collections = { //collections names
+    polls: "polls", choices: "choices", votes: "votes"}
 try {
     await mongoClient.connect();
     console.log('Connected to MongoDB');

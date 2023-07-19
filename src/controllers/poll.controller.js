@@ -25,5 +25,24 @@ export async function pollController(req, res){
     }
 }
 
+export async function getpollController(req, res){
+    // Retorna a lista de todas as enquetes:
+    // [
+    //     {
+    //         _id: "54759eb3c090d83494e2d222",
+    //     title: "Qual a sua linguagem favorita?",
+    //         expireAt: "2022-02-28 01:00" 
+    //     },
+    //     ...
+    // ]
+    try{
+        const pollsList = await db.collection(collections.polls).find().toArray();
+        return res.send(pollsList);
 
+    } catch(e) {
+        return res.status(500).send(e);
+    }
+
+
+}
 

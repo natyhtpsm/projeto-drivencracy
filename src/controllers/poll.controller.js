@@ -1,7 +1,7 @@
 import { db, collections } from '../database/database.js';
 import dayjs from 'dayjs';
 
-export async function pollController(){
+export async function pollController(req, res){
     // - [ ]  Deve receber pelo body da request, um parâmetro title, contendo o nome da enquete a ser cadastrada e expireAt, contendo a data e hora de expiração da enquete:
     const { title, expireAt } = req.body;
     const poll = { title, expireAt };

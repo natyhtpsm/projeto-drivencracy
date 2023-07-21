@@ -21,7 +21,6 @@ export async function choiceController(req, res){
         }
         const choiceCreated = await db.collection(collections.choices).insertOne(choice);
         if(choiceCreated){
-            // - [ ]  Deve retornar a opção de voto criada em caso de sucesso com status 201.
             return res.status(201).send("Choice created");
         }
     }catch(e){
@@ -31,15 +30,11 @@ export async function choiceController(req, res){
 
 export async function getchoiceController(req, res){
     const id = req.params.id;
-    //Rota: /poll/:id/choice (params?)
     try{
         const pollExists = await db.collection(collections.polls).find({ _id: id }).toArray();
-        // - [ ]  Validação: caso a enquete não exista deve retornar status 404.
         if (!pollExists) {
-          // Caso a enquete não exista, retorna status 404
           return res.status(404).send("This poll does not exist");
         }    
-        // - [ ]  Retorna a lista de opções de voto de uma enquete:
         const choices = await db.collection(collections.choices).find({pollId: id}).toArray();
         if(!choices){
             return res.status(404).send("There is no choices for this poll");
@@ -52,15 +47,11 @@ export async function getchoiceController(req, res){
 }
 
 export async function voteController(req, res){
-    // - [ ]  Não recebe nenhum dado do body da requisição. Deve registrar um voto na opção selecionada.
-    // POST /choice/:id/vote
     const id = req.params.id;
-    // - [ ]  O voto deve armazenar a data e hora que foi criado no back-end.
     const vote = {createdAt: dayjs().format('YYYY-MM-DD HH:mm'), choiceId: id};
     const currentDate = dayjs();
     try{
         const choiceExists = await db.collection(collections.choices).findOne({ _id: new ObjectId(id) });
-        //     - [ ]  Verificar se é uma opção existente, se não existir retornar 404.
         console.log("CHOICE", choiceExists);
         if (!choiceExists) {
           return res.status(404).send("This choice does not exist");
@@ -70,7 +61,6 @@ export async function voteController(req, res){
         if (!poll) {
           return res.status(404).send("This poll does not exist");
         }
-        //     - [ ]  Não pode ser registrado se a enquete já estiver expirado, retornar erro 403.
         const expirationDate = poll.expireAt;
         if (currentDate.isAfter(expirationDate)) {
           return res.status(403).send("This poll has expired");
@@ -83,6 +73,5 @@ export async function voteController(req, res){
     } catch(e){
         console.log(e.message);
     }
-    // - [ ]  Retorna status 201 em caso de sucesso.
 }
 

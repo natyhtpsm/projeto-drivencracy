@@ -29,7 +29,28 @@ export async function choiceController(req, res){
             return res.status(201).send("Choice created");
         }
     }catch(e){
-        return res.status(500).send(e.message);
+        console.log(e.message);
     }
 }   
+
+export async function getchoiceController(req, res){
+    const id = req.params.id;
+    //Rota: /poll/:id/choice (params?)
+    if(!id){
+        // - [ ]  Validação: caso a enquete não exista deve retornar status 404.
+        return res.status(404).send("This poll does not exist");
+    }
+    try{
+        // - [ ]  Retorna a lista de opções de voto de uma enquete:
+        const choices = await db.collection(collections.choices).find({pollId: id}).toArray();
+        if(!choices){
+            return res.status(404).send("There is no choices for this poll");
+        }
+        return res.send(choices);
+    }
+    catch(e){
+        console.log(e.message);
+    }
+}
+
 

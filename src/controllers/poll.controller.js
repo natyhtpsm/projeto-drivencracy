@@ -9,14 +9,12 @@ export async function pollController(req, res){
     //     		expireAt: "2022-02-28 01:00" }
     // - [ ]  Se **expireAt** for vazio deve ser considerado 30 dias de enquete por padrão.
     // Adicione 30 dias à data atualconst dataComMais30Dias = dataAtual.add(30, 'day');
-    if (!expireAt || expireAt === "") {
+    if (!expireAt || expireAt === "" || dayjs(expireAt).isBefore(dayjs()) ) {
         poll.expireAt = dayjs().add(30, "day").format("YYYY-MM-DD HH:mm");
     }
 
     try{
-        const createPoll = await db
-        .collection(collections.polls)
-        .insertOne(poll);
+        const createPoll = await db.collection(collections.polls).insertOne(poll);
         // - [ ]  Deve retornar a enquete criada em caso de sucesso com status 201.
         return res.status(201).send([poll]);
     }

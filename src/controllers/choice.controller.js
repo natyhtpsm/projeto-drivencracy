@@ -52,11 +52,9 @@ export async function voteController(req, res){
     const currentDate = dayjs();
     try{
         const choiceExists = await db.collection(collections.choices).findOne({ _id: new ObjectId(id) });
-        console.log("CHOICE", choiceExists);
         if (!choiceExists) {
           return res.status(404).send("This choice does not exist");
         }  
-
         const poll = await db.collection(collections.polls).findOne({ _id: new ObjectId(choiceExists.pollId)});
         if (!poll) {
           return res.status(404).send("This poll does not exist");

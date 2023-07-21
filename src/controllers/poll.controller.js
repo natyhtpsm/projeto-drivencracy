@@ -19,7 +19,7 @@ export async function pollController(req, res){
         return res.status(201).send([poll]);
     }
     catch(e){
-        return res.status(400).send(e);
+        console.log(e.message);
     }
 }
 
@@ -38,7 +38,7 @@ export async function getpollController(req, res){
         return res.send(pollsList);
 
     } catch(e) {
-        return res.status(500).send(e);
+        console.log(e.message);
     }
 
 

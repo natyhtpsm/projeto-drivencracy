@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { ObjectId } from 'mongodb';
 
 export async function pollController(req, res){
+    const { title, expireAt } = req.body;
     const poll = { title, expireAt };
     if (!expireAt || expireAt === "" || dayjs(expireAt).isBefore(dayjs()) ) {
         poll.expireAt = dayjs().add(30, "day").format("YYYY-MM-DD HH:mm");

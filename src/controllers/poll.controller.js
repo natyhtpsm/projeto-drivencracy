@@ -60,12 +60,14 @@ export async function getResultController(req, res) {
         return res.status(404).send("There are no choices for this poll");
       }
 
-      const choiceIds = choices.map((choice) => choice._id);
+      const choiceIds = choices.map((choice) => choice._id.toString());
+      console.log("CHOICE IDS: ",choiceIds);
       const voteCounts = await db.collection(collections.votes).aggregate([
-        { $match: { choiceId: { $in: choiceIds } } }, 
-        { $sortByCount: "$choiceId" }, 
+        { $match: { choiceId: { $in: choiceIds } } },
+        { $sortByCount: "$choiceId" },  
       ]).toArray();
-  
+        // const voteCounts = await db.collection(collections.votes).find().toArray();
+      console.log("VOTECOUNTS: ", voteCounts);
       if (voteCounts.length === 0) {
         return res.status(404).send("No votes have been cast for this poll");
       }

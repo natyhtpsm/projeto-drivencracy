@@ -37,7 +37,7 @@ export async function getchoiceController(req, res){
     const id = req.params.id;
     //Rota: /poll/:id/choice (params?)
     try{
-        const pollExists = await db.collection(collections.polls).find({ _id: id });
+        const pollExists = await db.collection(collections.polls).find({ _id: id }).toArray();
         // - [ ]  Validação: caso a enquete não exista deve retornar status 404.
         if (!pollExists) {
           // Caso a enquete não exista, retorna status 404
@@ -63,13 +63,13 @@ export async function voteController(req, res){
     const vote = {createdAt: dayjs().format('YYYY-MM-DD HH:mm'), choiceId: id};
     const currentDate = dayjs();
     try{
-        const choiceExists = await db.collection(collections.choices).find({ _id: id });
+        const choiceExists = await db.collection(collections.choices).findOne({ _id: id });
         //     - [ ]  Verificar se é uma opção existente, se não existir retornar 404.
         if (!choiceExists) {
           return res.status(404).send("This choice does not exist");
         }  
 
-        const poll = await db.collection(collections.polls).find({ _id: choiceExists.pollId });
+        const poll = await db.collection(collections.polls).findOne({ _id: choiceExists.pollId });
         if (!poll) {
           return res.status(404).send("This poll does not exist");
         }

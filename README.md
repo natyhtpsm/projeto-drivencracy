@@ -4,15 +4,7 @@
 
 O objetivo da API Drivencracy é fornecer um sistema simples e direto para criação e votação de enquetes. A API permite que os usuários criem enquetes com opções de voto e registrem seus votos. É uma aplicação de back-end construída em Node.js, utilizando Express.js como framework web e MongoDB para armazenamento de dados.
 
-## ✅ Requisitos
-
-- A porta utilizada pelo servidor deve ser a 5000.
-- Versionamento usando Git é obrigatório. Crie um repositório no seu perfil do GitHub.
-- Faça commits a cada funcionalidade implementada.
-- Utilize dotenv.
-- O deploy da API deve ser feito no Render e do banco no MongoDB Atlas.
-
-## Rotas e Funcionalidades
+## ✅ Rotas e Funcionalidades
 
 ### POST /poll
 
